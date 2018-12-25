@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MultipageDrawerApp());
+void main() => runApp(MultiPageDrawerApp());
 
-class MultipageDrawerApp extends StatelessWidget {
+class MultiPageDrawerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +16,7 @@ class MultipageDrawerApp extends StatelessWidget {
       },
       builder: (context, child) {
         return Scaffold(
-          drawer: MyDrawer(key:Key("main_drawer"),navigator: (child.key as GlobalKey<NavigatorState>)),
+          drawer: MyDrawer(navigator: (child.key as GlobalKey<NavigatorState>)),
           body: child,
         );
       },
@@ -26,7 +26,6 @@ class MultipageDrawerApp extends StatelessWidget {
 
 class MyDrawer extends StatelessWidget {
   final GlobalKey<NavigatorState> navigator;
-
 
   const MyDrawer({Key key, this.navigator}) : super(key: key);
 
@@ -84,12 +83,8 @@ class MyDrawer extends StatelessWidget {
             leading: Icon(Icons.send),
             title: Text('Second page'),
             onTap: () {
-
               navigator.currentState.pushNamed("/second");
               state.close();
-             //RootScaffold.openDrawer(context);
-              //RootScaffold.of(context)
-              //navigator.currentState.pop();
             },
           ),
         ],
@@ -98,23 +93,7 @@ class MyDrawer extends StatelessWidget {
   }
 }
 
-class RootScaffold {
-  static openDrawer(BuildContext context) {
-    final ScaffoldState scaffoldState =
-        context.rootAncestorStateOfType(TypeMatcher<ScaffoldState>());
-    scaffoldState.openDrawer();
-  }
-
-  static ScaffoldState of(BuildContext context) {
-    final ScaffoldState scaffoldState =
-    context.rootAncestorStateOfType(TypeMatcher<ScaffoldState>());
-    return scaffoldState;
-
-  }
-}
-
 class FirstScreen extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,11 +107,9 @@ class FirstScreen extends StatelessWidget {
         ),
       ),
       body: Center(
-        child: RaisedButton(
-          child: Text('Launch screen'),
-          onPressed: () {
-            Navigator.pushNamed(context, '/second');
-          },
+        child: Text(
+          "First Screen",
+          style: TextStyle(fontSize: 20),
         ),
       ),
     );
@@ -147,23 +124,33 @@ class SecondScreen extends StatelessWidget {
         title: Text("Second Screen"),
       ),
       body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            // Navigate back to first screen when tapped!
-          },
-          child: Text('Go back!'),
+        child: Text(
+          "Second Screen",
+          style: TextStyle(fontSize: 20),
         ),
       ),
     );
   }
 }
 
-
-class RootDrawer
-{
-  static DrawerControllerState of(BuildContext context){
+class RootDrawer {
+  static DrawerControllerState of(BuildContext context) {
     final DrawerControllerState drawerControllerState =
-    context.rootAncestorStateOfType(TypeMatcher<DrawerControllerState>());
+        context.rootAncestorStateOfType(TypeMatcher<DrawerControllerState>());
     return drawerControllerState;
+  }
+}
+
+class RootScaffold {
+  static openDrawer(BuildContext context) {
+    final ScaffoldState scaffoldState =
+        context.rootAncestorStateOfType(TypeMatcher<ScaffoldState>());
+    scaffoldState.openDrawer();
+  }
+
+  static ScaffoldState of(BuildContext context) {
+    final ScaffoldState scaffoldState =
+        context.rootAncestorStateOfType(TypeMatcher<ScaffoldState>());
+    return scaffoldState;
   }
 }
