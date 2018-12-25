@@ -2,7 +2,7 @@
 
 Demo application for showing multi page drawer in flutter
 
-
+![preview](output/flutter_multi_page.webm)
 
 ## Links
 
