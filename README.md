@@ -2,7 +2,7 @@
 
 Demo application for showing multi page drawer in flutter
 
-![preview](output/flutter_multi_page.gif)
+![preview](output/flutter_multi_page.gif =250x)
 
 ## Links
 
