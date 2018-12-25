@@ -27,10 +27,12 @@ class MultipageDrawerApp extends StatelessWidget {
 class MyDrawer extends StatelessWidget {
   final GlobalKey<NavigatorState> navigator;
 
+
   const MyDrawer({Key key, this.navigator}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final state = RootDrawer.of(context);
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -74,7 +76,8 @@ class MyDrawer extends StatelessWidget {
             leading: Icon(Icons.dashboard),
             title: Text('First page'),
             onTap: () {
-              navigator.currentState.pushNamed("/");
+              navigator.currentState.pushReplacementNamed("/");
+              state.close();
             },
           ),
           ListTile(
@@ -83,12 +86,8 @@ class MyDrawer extends StatelessWidget {
             onTap: () {
 
               navigator.currentState.pushNamed("/second");
-
-              var x = RootDrawer.of(context);
-              x.close();
-              print(x);
-
-             // RootScaffold.openDrawer(context);
+              state.close();
+             //RootScaffold.openDrawer(context);
               //RootScaffold.of(context)
               //navigator.currentState.pop();
             },
