@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_page_drawer/ui/navigation_drawer.dart';
 
 void main() => runApp(MultiPageDrawerApp());
 
@@ -15,11 +16,82 @@ class MultiPageDrawerApp extends StatelessWidget {
         '/second': (context) => SecondScreen(),
       },
       builder: (context, child) {
-        return Scaffold(
-          drawer: MyDrawer(navigator: (child.key as GlobalKey<NavigatorState>)),
-          body: child,
+        return DynamicApp(
+          navigator: (child.key as GlobalKey<NavigatorState>),
+          child: child,
         );
       },
+    );
+  }
+}
+
+class DynamicApp extends StatefulWidget {
+  final GlobalKey<NavigatorState> navigator;
+  final Widget child;
+  List<DrawerItem> drawerItems = [
+    DrawerItem("First Screen", Icons.first_page),
+    DrawerItem("Second Screen", Icons.dashboard),
+  ];
+
+  DynamicApp({Key key, this.navigator, this.child}) : super(key: key);
+
+  @override
+  _DynamicAppState createState() => _DynamicAppState();
+}
+
+class _DynamicAppState extends State<DynamicApp> {
+  var _selectedIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: NavigationDrawer(
+        selectedIndex: _selectedIndex,
+        drawerItems: widget.drawerItems,
+        headerView: Container(
+          decoration: BoxDecoration(color: Theme.of(context).primaryColor),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 32.0),
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: 120.0,
+                    height: 120.0,
+                    decoration: new BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white),
+                        image: new DecorationImage(
+                            fit: BoxFit.fill,
+                            image: new NetworkImage(
+                                "https://avatars3.githubusercontent.com/u/15701316?s=460&v=4"))),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: <Widget>[
+                      Text(
+                        "Ali Mohammadi",
+                        style: TextStyle(fontSize: 22, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        onNavigationItemSelect: (index) {
+          widget.navigator.currentState.pushNamed("/second");
+          setState(() {
+            _selectedIndex = index;
+          });
+          return true; // true means that drawer must close and false is Vice versa
+        },
+      ),
+      body: widget.child,
     );
   }
 }
