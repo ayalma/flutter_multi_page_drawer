@@ -6,7 +6,7 @@ Demo application for showing multi page drawer in flutter
 
 ## Links
 
-- [Medium Post]()
+- [Medium Post](https://medium.com/@alimohammadi7117/shared-navigationdrawer-for-all-pages-in-flutter-9208b5993481)
 
 - [Lab: Write your first Flutter app](https://flutter.io/docs/get-started/codelab)
 - [Cookbook: Useful Flutter samples](https://flutter.io/docs/cookbook)
